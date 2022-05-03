@@ -1,0 +1,25 @@
+pytz==2022.1  # https://github.com/stub42/pytz
+python-slugify==6.1.2 # https://github.com/un33k/python-slugify
+Pillow==9.1.0  # https://github.com/python-pillow/Pillow
+argon2-cffi==21.3.0  # https://github.com/hynek/argon2_cffi
+whitenoise==6.0.0  # https://github.com/evansd/whitenoise
+redis>=2.10.5  # https://github.com/antirez/redis
+celery==5.2.6  # pyup: <5.0  # https://github.com/celery/celery
+flower==1.0.0  # https://github.com/mher/flower
+
+
+
+# Django
+# ------------------------------------------------------------------------------
+Django==4.0.4  # pyup: < 2.1  # https://www.djangoproject.com/
+django-environ==0.8.1  # https://github.com/joke2k/django-environ
+django-model-utils==4.2.0  # https://github.com/jazzband/django-model-utils
+django-allauth==0.50.0  # https://github.com/pennersr/django-allauth
+django-crispy-forms==1.14.0  # https://github.com/django-crispy-forms/django-crispy-forms
+django-redis==5.2.0  # https://github.com/niwinz/django-redis
+django-autocomplete-light==3.9.4  # https://github.com/yourlabs/django-autocomplete-light
+django-import-export==2.8.0 # https://github.com/django-import-export/django-import-export
+
+# Django REST Framework
+djangorestframework==3.13.1  # https://github.com/encode/django-rest-framework
+coreapi==2.3.3  # https://github.com/core-api/python-client
