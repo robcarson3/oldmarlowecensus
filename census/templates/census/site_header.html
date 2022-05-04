@@ -65,7 +65,6 @@
       <option value="collection">Specific Features</option>
       <option value="year">Year</option>
       <option value="stc">STC / Wing #</option>
-      <option value="bartlett">Bartlett #</option>
       <option value="nsc">MC #</option>
     </select>
     <input id="search-bar-form-text" type="text" name="value" placeholder="Search..">
@@ -79,9 +78,9 @@
     });
     $(function() {
         var autofillMap = {
-            location: 'https://shakespearecensus.org/autofill/location/',
-            provenance_name: 'https://shakespearecensus.org/autofill/provenance/',
-            collection: 'https://shakespearecensus.org/autofill/collection/'
+            location: '/autofill/location/',
+            provenance_name: '/autofill/provenance/',
+            collection: '/autofill/collection/'
         };
 
         var autofillResponse = function(field, query, response) {

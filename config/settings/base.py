@@ -141,6 +141,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# AUTO_FIELD
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/4.0/releases/3.2/#customizing-type-of-auto-created-primary-keys
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -223,7 +228,11 @@ ADMINS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-NOTIFICATIONS = [('Zack Lesser', 'zacharylesser@gmail.com')]
+NOTIFICATIONS = [
+    ('Zack Lesser', 'zacharylesser@gmail.com'),
+    # ('Colin McFaul', 'cjm@colinmcfaul.com'),
+    # ('Rob Carson', 'CARSON@hws.edu'),
+]
 
 # Celery
 # ------------------------------------------------------------------------------

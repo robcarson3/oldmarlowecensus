@@ -62,9 +62,6 @@ docs/_build/
 # PyBuilder
 target/
 
-#Pycharm
-.idea/
-
 # pyenv
 .python-version
 
@@ -279,3 +276,6 @@ shakespeare_census/media/
 .pytest_cache/
 .env
 .envs/*
+
+### Media
+media/titleicon/
