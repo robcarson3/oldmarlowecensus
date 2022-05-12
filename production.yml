@@ -4,6 +4,7 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_caddy: {}
+  media_volume:
 
 services:
   django: &django
@@ -19,8 +20,8 @@ services:
       - ./.envs/.production/.postgres
     volumes:
       - ./census/ingest/data:/app/census/ingest/data
-      - ./census/media:/app/census/media
       - ./census/migrations:/app/census/migrations
+      - media_volume:/app/census/media/
     command: /start
 
   postgres:
@@ -38,18 +39,17 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/caddy/Dockerfile
-    image: shakespeare_census_production_caddy
     depends_on:
       - django
-    volumes:
-      - production_caddy:/root/.caddy
-      - ./census/media:/srv/media
     env_file:
       - ./.envs/.production/.caddy
+    volumes:
+      - production_caddy:/root/.caddy
+      - media_volume:/srv/media
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
-
+  
   redis:
     image: redis:3.2
 
@@ -69,3 +69,4 @@ services:
     #     ports:
     #       - "5555:5555"
     #     command: /start-flower
+
