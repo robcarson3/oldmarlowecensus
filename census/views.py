@@ -297,7 +297,10 @@ def about(request, viewname='about'):
     facsimile_copy_count = models.CanonicalCopy.objects.filter(
             ~Q(Digital_Facsimile_URL=None) & ~Q(Digital_Facsimile_URL='')
     ).count()
-    facsimile_copy_percent = round(100 * facsimile_copy_count / copy_count)
+    if copy_count > 0:
+        facsimile_copy_percent = round(100 * facsimile_copy_count / copy_count)
+    else:
+        facsimile_copy_percent = 0
 
     pre_render_context = {
         'copy_count': str(copy_count),
