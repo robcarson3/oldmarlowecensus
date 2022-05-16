@@ -62,6 +62,9 @@ target/
 # pyenv
 .python-version
 
+#Pycharm
+.idea/
+
 # celery beat schedule file
 celerybeat-schedule
 
