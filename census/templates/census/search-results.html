@@ -49,7 +49,7 @@
         {% if result_list %}
         <tr>
 	    <th class="terse"> 
-		    <a href="{% url 'search' %}?field={{field}}&value={{value}}&order=sc">SC&nbsp;#</a>&nbsp;<i class="fas fa-caret-down {% if request.GET.order != 'sc' %}hidden-icon{% endif %}"></i> </th>
+		    <a href="{% url 'search' %}?field={{field}}&value={{value}}&order=sc">MC&nbsp;#</a>&nbsp;<i class="fas fa-caret-down {% if request.GET.order != 'sc' %}hidden-icon{% endif %}"></i> </th>
 	    <th> 
 		<a href="{% url 'search' %}?field={{field}}&value={{value}}&order=date">Year</a>&nbsp;<i class="fas fa-caret-down {% if request.GET.order != 'date' %}hidden-icon{% endif %}"></i> </th>
             <th class="detailed"> 

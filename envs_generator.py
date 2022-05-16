@@ -121,7 +121,7 @@ def generate_postgres_env_file_loc():
 def generate_caddy_env_file(hostname):
     postgres_file = "# Caddy\n"
     postgres_file += "# -------------------------------------------------------------------------\n"
-    postgres_file += "DOMAIN_NAME=" + hostname " + "\n"
+    postgres_file += "DOMAIN_NAME=" + hostname + "\n"
     f = open(".envs/.production/.caddy", "w")
     f.write(postgres_file)
     f.close()

@@ -148,8 +148,8 @@ class BaseCopy(models.Model):
     Digital_Facsimile_URL = models.URLField(max_length=500, null=True, blank=True)
     NSC = models.CharField(max_length=40, default='', null=True, blank=True)
     Shelfmark = models.CharField(max_length=500, default='', null=True, blank=True)
-    Height = models.FloatField(default=0, null=True)
-    Width = models.FloatField(default=0, null=True)
+    Height = models.FloatField(default=0, null=True, blank=True)
+    Width = models.FloatField(default=0, null=True, blank=True)
     Marginalia = models.TextField(null=True, blank=True, default='')
     Condition = models.CharField(max_length=500, default='', null=True, blank=True)
     Binding = models.CharField(max_length=500, default='', null=True, blank=True)
@@ -175,7 +175,7 @@ class BaseCopy(models.Model):
     location_verified = models.BooleanField(default=False)
 
     def __str__(self):
-        return  "{} ({}), SC# {}".format(self.issue, self.issue.year, self.NSC)
+        return  "{} ({}), MC# {}".format(self.issue, self.issue.year, self.NSC)
     class Meta:
         verbose_name_plural = "Base copies"
 

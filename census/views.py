@@ -90,7 +90,7 @@ def copy_location_sort_key(c):
     if c.location is not None:
         name = c.location.name
     else:
-        name = '' 
+        name = ''
     return strip_article(name if name else '')
 
 def copy_shelfmark_sort_key(c):
@@ -161,7 +161,7 @@ def search(request, field=None, value=None, order=None):
         display_field = 'STC / Wing'
         result_list = copy_list.filter(issue__STC_Wing__icontains=value)
     elif field == 'nsc' and value:
-        display_field = 'SC'
+        display_field = 'MC'
         result_list = copy_list.filter(NSC=value)
     elif field == 'year' and value:
         display_field = 'Year'
@@ -407,7 +407,7 @@ def copy_data(request, copy_id):
 def sc_copy_modal(request, sc):
     # This is almost identical to copy, above, but it accepts a SC number
     # instead of an issue number, and if the SC number is found, it
-    # finds the issue, and displays the page for that issue. The 
+    # finds the issue, and displays the page for that issue. The
     # modal-display javascript then detects what has happened and
     # automatically displays the modal for the given copy.
 
@@ -512,7 +512,7 @@ def copy_sc_bartlett_csv_export(request):
     response['Content-Disposition'] = 'attachment; filename="shakespeare_census_year_issue_copy_count.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['SC #', 'Bartlett 1939 #', 'Bartlett 1916 #', 'Title', 'Year'])
+    writer.writerow(['MC #', 'Bartlett 1939 #', 'Bartlett 1916 #', 'Title', 'Year'])
     for copy in copies:
         writer.writerow([
             copy.NSC,
