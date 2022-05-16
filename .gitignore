@@ -273,3 +273,6 @@ shakespeare_census/media/
 .pytest_cache/
 .env
 .envs/*
+
+dump_2022-05-16_16_40_57.gz
+
