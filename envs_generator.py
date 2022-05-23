@@ -3,6 +3,12 @@ import secrets
 import string
 import os
 
+POSTGRES_USERNAME_PROD = None
+POSTGRES_PASSWORD_PROD = None
+
+POSTGRES_USERNAME_LOCAL = None
+POSTGRES_PASSWORD_LOCAL = None
+
 
 # Generate a random password of length len
 # if must_be_alphanumeric is TRUE then password will be alphanumeric,
@@ -25,7 +31,8 @@ def generate_django_env_file_prod(hostname):
     django_file += "DJANGO_ADMIN_URL="
     django_file += generate_password(32, True) + "/\n"
     django_file += "DJANGO_ALLOWED_HOSTS="
-    django_file += hostname + "\n\n"
+    django_file += hostname + "\n"
+    django_file += f"DATABASE_URL=postgres://{POSTGRES_USERNAME_PROD}:{POSTGRES_PASSWORD_PROD}@postgres:5432/shakespeare_census\n\n"
     django_file += "# Security\n"
     django_file += "# ---------------------------------------------------------------------------\n"
     django_file += "# TIP: better off using DNS, however, redirect is OK too\n"
@@ -51,6 +58,7 @@ def generate_django_env_file_prod(hostname):
     django_file += "REDIS_URL=redis://redis:6379/0\n\n"
     django_file += "# Celery\n"
     django_file += "# ---------------------------------------------------------------------------\n\n"
+    django_file += "CELERY_BROKER_URL=redis://redis:6379/0\n\n"
     django_file += "# Flower\n"
     django_file += "CELERY_FLOWER_USER="
     django_file += generate_password(32, True) + "\n"
@@ -64,15 +72,17 @@ def generate_django_env_file_prod(hostname):
 
 # generate .postgres file in .envs/.production directory
 def generate_postgres_env_file_prod():
+    POSTGRES_USERNAME_PROD = generate_password(32, False)
+    POSTGRES_PASSWORD_PROD = generate_password(64, True)
     postgres_file = "# PostgreSQL\n"
     postgres_file += "# -------------------------------------------------------------------------\n"
     postgres_file += "POSTGRES_HOST=postgres\n"
     postgres_file += "POSTGRES_PORT=5432\n"
     postgres_file += "POSTGRES_DB=shakespeare_census\n"
     postgres_file += "POSTGRES_USER="
-    postgres_file += generate_password(32, False) + "\n"
+    postgres_file += POSTGRES_USERNAME_PROD + "\n"
     postgres_file += "POSTGRES_PASSWORD="
-    postgres_file += generate_password(64, True) + "\n"
+    postgres_file += POSTGRES_PASSWORD_PROD + "\n"
     f = open(".envs/.production/.postgres", "w")
     f.write(postgres_file)
     f.close()
@@ -83,12 +93,18 @@ def generate_postgres_env_file_prod():
 def generate_django_env_file_loc():
     django_file = "# General\n"
     django_file += "# ---------------------------------------------------------------------------\n"
-    django_file += "USE_DOCKER=yes\n\n"
+    django_file += "USE_DOCKER=yes\n"
+    django_file += "DJANGO_READ_DOT_ENV_FILE=True\n"
+    django_file += "DJANGO_DEBUG=True\n"
+    django_file += "DJANGO_SECRET_KEY="
+    django_file += generate_password(64, True) + "\n"
+    django_file += f"DATABASE_URL=postgres://{POSTGRES_USERNAME_LOCAL}:{POSTGRES_PASSWORD_LOCAL}@postgres:5432/shakespeare_census\n\n"
     django_file += "# Redis\n"
     django_file += "# ---------------------------------------------------------------------------\n"
     django_file += "REDIS_URL=redis://redis:6379/0\n\n"
     django_file += "# Celery\n"
     django_file += "# ---------------------------------------------------------------------------\n\n"
+    django_file += "CELERY_BROKER_URL=redis://redis:6379/0\n\n"
     django_file += "# Flower\n"
     django_file += "CELERY_FLOWER_USER="
     django_file += generate_password(32, True) + "\n"
@@ -102,15 +118,17 @@ def generate_django_env_file_loc():
 
 # generate .postgres file in .envs/.local directory
 def generate_postgres_env_file_loc():
+    POSTGRES_USERNAME_LOCAL = generate_password(32, False)
+    POSTGRES_PASSWORD_LOCAL = generate_password(64, True)
     postgres_file = "# PostgreSQL\n"
     postgres_file += "# -------------------------------------------------------------------------\n"
     postgres_file += "POSTGRES_HOST=postgres\n"
     postgres_file += "POSTGRES_PORT=5432\n"
     postgres_file += "POSTGRES_DB=shakespeare_census\n"
     postgres_file += "POSTGRES_USER="
-    postgres_file += generate_password(32, False) + "\n"
+    postgres_file += POSTGRES_USERNAME_LOCAL + "\n"
     postgres_file += "POSTGRES_PASSWORD="
-    postgres_file += generate_password(64, True) + "\n"
+    postgres_file += POSTGRES_PASSWORD_LOCAL + "\n"
     f = open(".envs/.local/.postgres", "w")
     f.write(postgres_file)
     f.close()
@@ -214,7 +232,7 @@ def update_voyant_gen(voyant_hostname, voyant_gen_py_path):
 # get voyant_hostname (inferred from hostname)
 def get_hostname():
     parser = argparse.ArgumentParser(
-        description="Generate environment files for django and postgre")
+        description="Generate environment files for django and postgres")
     parser.add_argument("hostname")
     args = parser.parse_args()
     hostname = vars(args)["hostname"]
@@ -227,10 +245,10 @@ def main():
     hostname = get_hostname()
     # update_voyant_gen(voyant_hostname, voyant_gen_py_path)
     # update_traefik_toml(hostname, voyant_hostname, traefik_toml_path)
-    generate_django_env_file_prod(hostname)
     generate_postgres_env_file_prod()
-    generate_django_env_file_loc()
+    generate_django_env_file_prod(hostname)
     generate_postgres_env_file_loc()
+    generate_django_env_file_loc()
     generate_caddy_env_file(hostname)
 
 
